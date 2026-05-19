@@ -56,12 +56,12 @@
 \cite{asterisk,harvestman_robot,i_centipod_aqua,K3,six_legged_robot}
 等が挙げられる．
 しかしながら，これらの移動ロボットには，ロボット同士での性能の比較が難しいという課題がある．
-その要因として，移動ロボットの不整地走破性能における一般的な指標が存在しないことが挙げられる．
+その要因の一つとして，移動ロボットの不整地走破性能における一般的な指標が存在しないことが挙げられる．
 
 %先行研究での課題
 先行研究における不整地走破性能の評価方法は，段差の高さや斜度，間隙の長さなどのスケールを用いた指標や
 \cite{TITANXX,DFC,six_legged_robot,ro-ba}，
-ロボットフィールドや実際の災害現場のような特定の環境内における速度や加速度，走破可否といった走行性能によって検証されてきた
+ロボットフィールドや実際の災害現場のような特定の環境内における速度や加速度，走破可否といった性能によって検証されてきた
 \cite{Quince,trackwalker,i_centipod_aqua}．
 %ロボットたちの性能評価の課題点とは
 %いままでは，段差やら斜度のスケールや災害現場を再現した特定の環境における走破可否から検証されてる
@@ -75,28 +75,47 @@
 本手法は，不整地を周波数表現することで移動ロボットのスケールと地形のスケールの関係を捉えるというものである(Fig.~\ref{fig:概要図})．
 従来のスケールによる個別の評価や時間領域での評価ではなく，地形を空間的な波として捉え，その周波数成分を変化させた地形の上を走行させたときの移動ロボットの走行性能を，応答特性として評価する．
 %sin波で見れば移動ロボットの走行性能を一般化できるのではないかと考えた．
-このように，移動ロボットの走行性能を周波数領域で評価することで，様々な地形に応じた走行性能を評価できると考えた．
+このように，移動ロボットの走破性を周波数領域で評価することで，様々な地形に応じた走行性能を評価できると考えた．
 
 %この手法を使ってなにか面白いことができるか？
+%未知環境における走破性を予測するアプローチを考えた
+さらに，この手法を用いることで，未知環境における走破性能を予測することも期待できる．
+災害現場は未知環境であり，建物の倒壊等の影響で環境が刻々と変化する．このため，観測するまで地形の形状がわからず，事前に移動ロボットの走破性能を予測することはできない．
+未知の不整地を十分滑らかで連続した波であるとして，フーリエ変換の考え方を応用してそれぞれの周波数帯のsin波地形に分解できると仮定する．
+このとき，前述したsin波形状の地形の上を走らせて周波数の変化と走破性能の関係の考え方から，この分解した各sin波地形における走破性能を個別に調査して重ね合わせることで，未知の不整地における走破性能を予測できる可能性がある
+%（未知環境を分解できると仮定し，走破性の重ね合わせで表現する→イメージ図を貼る）
+(Fig.~\ref{fig:未知環境における走破性の予測のイメージ図})．
 
-
-%結局なにやるんだ
-このような理由から本研究では，不整地を周波数表現し，その周波数成分を変化させた各地形における移動ロボットの走行性能を応答特性として評価する手法を検討する．
-本手法では実験に必要な地形のパターンが膨大になることに加えて，移動ロボットのスケールとの関係を調べるために，複数のスケールの移動ロボットを用意する必要がある．
-このため，
-%実機による評価は困難であると考え，
-本手法が走行性能を評価するのに有効かどうかを確認する初期段階として，物理シミュレーションを用いて検証を行った．
-
-\begin{figure}[t!]
+\begin{figure}[tb!]
     \centering
     \includegraphics[width=1.0\linewidth]{figure/concept2.jpg}
     %地形周波数表現による走行性能評価の概要図
     \caption{Concept of mobility evaluation using terrain frequency representation}
     \label{fig:概要図}
+
+    \vspace{10pt}
+
+    \centering
+    \includegraphics[width=1.0\linewidth]{figure/研究内容のイメージ図.png}
+    %未知環境における走破性の予測のイメージ図
+    \caption{Concept of mobility evaluation using terrain frequency representation}
+    \label{fig:未知環境における走破性の予測のイメージ図}
 \end{figure}
 
+%結局なにやるんだ
+本研究では，この手法および仮説を検証することを目的とし，本稿では地形を地形を周波数表現することで移動ロボットのスケールと地形のスケールの関係を捉えるという手法について述べる．
+本手法では実験に必要な地形のパターンが膨大になることに加えて，移動ロボットのスケールとの関係を調べるために，複数のスケールの移動ロボットを用意する必要がある．
+このため，
+%実機による評価は困難であると考え，
+本手法が走行性能を評価するのに有効かどうかを確認する初期段階として，物理シミュレーションを用いて検証を行った．
 
-
+% \begin{figure}[tb!]
+%     \centering
+%     \includegraphics[width=1.0\linewidth]{figure/研究内容のイメージ図.png}
+%     %未知環境における走破性の予測のイメージ図
+%     \caption{Concept of mobility evaluation using terrain frequency representation}
+%     \label{fig:未知環境における走破性の予測のイメージ図}
+% \end{figure}
 
 %未知環境軸の緒言がこんなかんじ
 %研究背景
@@ -149,32 +168,26 @@
 
 
 
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=1.0\linewidth]
-    {figure/研究内容のイメージ図.png}
-    %重ね合わせによる走行性能の評価イメージ
-    \caption{Image of mobility evaluation based on decomposition and superposition}
-    \label{fig:研究概要1研究内容のイメージ図}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=1.0\linewidth]
-    {figure/simのイメージ図.png}
-    %周波数特性による走行性能評価のシミュレーションイメージ
-    \caption{Simulation of mobility evaluation using frequency characteristics}
-    \label{fig:simイメージ図}
-\end{figure}
-
-\begin{figure}[t]
-    \centering
-    \includegraphics[width=1.0\linewidth]
-    {figure/速度の最大最小差分の周波数応答.png}
-    %周波数応答の速度差分のグラフイメージ
-    \caption{Relationship between the normalized velocity variation (ΔV/A) and terrain frequency}
-    \label{fig:イメージグラフ}
-\end{figure}
+\begin{figure*}[t!]
+	\centering
+	\begin{subfigure}{0.6\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{figure/simimage.png}
+		\caption{Simulation of mobility evaluation using frequency characteristics}
+		\label{fig:simのイメージ図}
+	\end{subfigure}
+	\hspace{0.05\textwidth}
+	\begin{subfigure}{0.3\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{figure/simshot.png}
+		\caption{Screenshot of simulation}
+		\label{fig:simスクショ}
+	\end{subfigure}
+	%シミュレーションの全体構成とスクリーンショット
+  \hspace{0.04\textwidth}
+	\caption{Overall structure and screenshot of the simulation}
+	\label{fig:まとめ図}
+\end{figure*}
 
 
 
